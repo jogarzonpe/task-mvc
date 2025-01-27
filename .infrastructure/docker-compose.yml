@@ -1,0 +1,29 @@
+name: uni-minuto
+
+networks:
+  uni-minuto:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:8.3.0
+    hostname: mysql
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d
+    environment:
+      - MYSQL_DATABASE=task_mvc
+      - MYSQL_ROOT_PASSWORD=p4swr00t
+    ports:
+      - 3306:3306
+    expose:
+      - '3306'
+    networks:
+      - uni-minuto
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ['CMD', 'mysql', '-e', 'SHOW DATABASES;']
+      interval: 5s
+      timeout: 5s
+      retries: 10
