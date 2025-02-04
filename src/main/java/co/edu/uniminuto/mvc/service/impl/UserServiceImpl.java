@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findRole(Long id) {
+    @Transactional(readOnly = true)
+    public User findUser(Long id) {
         return userRepository.findById(id).orElse(new User());
     }
 

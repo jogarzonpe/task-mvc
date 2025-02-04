@@ -12,68 +12,56 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
- * JPS entity for <code>USERS</code> data table.
+ * JPS entity for <code>CUSTOMERS</code> data table.
  */
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS")
-public class User implements Serializable {
+@Table(name = "CUSTOMERS")
+public class Customer implements Serializable {
 
     /**
-     * User's Primary Key.
+     * Customer's Primary Key.
      */
     @Id
-    @Column(name = "USER_ID")
+    @Column(name = "CUST_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * User's unique login, defined as email.
+     * Customer's since date.
      */
-    @Email
-    @NotEmpty
-    @Size(max = 100)
-    @Column(name = "USER_EMAIL", length = 100, nullable = false, unique = true)
-    private String email;
+    @Builder.Default
+    @Column(name = "CUST_SINCE_DATE", nullable = false)
+    private LocalDate sinceDate = LocalDate.now();
 
     /**
-     * User's password hash, cyphered.
-     */
-    @NotEmpty
-    @Size(max = 200)
-    @Column(name = "USER_PASSWORD_HASH", length = 200, nullable = false)
-    private String password;
-
-    /**
-     * User's person information.
+     * Customer's person information.
      */
     @MapsId
     @PrimaryKeyJoinColumn
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "PERS_ID", unique = true, nullable = false)
+    @JoinColumn(name = "CUST_ID", referencedColumnName = "PERS_ID", unique = true, nullable = false)
     private Person data;
 
     /**
-     * User's role relationship.
+     * Customer's employee responsible relationship.
      */
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "ROLE_ID", nullable = false)
-    private Role role;
+    @JoinColumn(name = "EMPL_ID_RESPONSIBLE", nullable = false)
+    private Employee responsible;
 
 }

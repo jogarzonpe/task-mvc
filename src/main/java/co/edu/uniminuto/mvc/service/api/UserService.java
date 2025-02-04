@@ -8,7 +8,7 @@ public interface UserService {
 
     List<User> getUsers();
 
-    User findRole(Long id);
+    User findUser(Long id);
 
     User saveUser(User user);
 

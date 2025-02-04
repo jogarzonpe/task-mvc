@@ -12,68 +12,69 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
- * JPS entity for <code>USERS</code> data table.
+ * JPS entity for <code>EMPLOYEES</code> data table.
  */
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS")
-public class User implements Serializable {
+@Table(name = "EMPLOYEES")
+public class Employee implements Serializable {
 
     /**
-     * User's Primary Key.
+     * Employee's Primary Key.
      */
     @Id
-    @Column(name = "USER_ID")
+    @Column(name = "EMPL_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * User's unique login, defined as email.
+     * Employee's started date.
      */
-    @Email
-    @NotEmpty
-    @Size(max = 100)
-    @Column(name = "USER_EMAIL", length = 100, nullable = false, unique = true)
-    private String email;
+    @Column(name = "EMPL_STARTED_DATE", nullable = false)
+    private LocalDate startedDate;
 
     /**
-     * User's password hash, cyphered.
+     * Employee's password hash, cyphered.
      */
-    @NotEmpty
-    @Size(max = 200)
-    @Column(name = "USER_PASSWORD_HASH", length = 200, nullable = false)
-    private String password;
+    @Column(name = "EMPL_FINISHED_DATE", nullable = false)
+    private LocalDate finishedDate;
 
     /**
-     * User's person information.
+     * Employee's person information.
      */
     @MapsId
     @PrimaryKeyJoinColumn
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "PERS_ID", unique = true, nullable = false)
+    @JoinColumn(name = "EMPL_ID", referencedColumnName = "PERS_ID", unique = true, nullable = false)
     private Person data;
 
     /**
-     * User's role relationship.
+     * Employee's job title relationship.
      */
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "ROLE_ID", nullable = false)
-    private Role role;
+    @JoinColumn(name = "JOB_ID", nullable = false)
+    private JobTitle jobTitle;
+
+    /**
+     * Employee's dependency relationship.
+     */
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "DEPE_ID", nullable = false)
+    private Dependency dependency;
 
 }

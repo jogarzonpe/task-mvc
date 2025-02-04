@@ -25,6 +25,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Role findRole(Long id) {
         return roleRepository.findById(id).orElse(new Role());
     }

@@ -16,30 +16,31 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * JPA Entity for <code>ROLES</code> data table.
+ * JPA Entity for <code>DEPENDENCIES</code> data table.
  */
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ROLES")
-public class Role implements Serializable {
+@Table(name = "DEPENDENCIES")
+public class Dependency implements Serializable {
 
     /**
-     * Role's primary key.
+     * Dependency's primary key.
      */
     @Id
-    @Column(name = "ROLE_ID")
+    @Column(name = "DEPE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * Role's name.
+     * Dependency's name.
      */
     @NotEmpty
-    @Size(max = 25)
-    @Column(name = "ROLE_NAME")
+    @Size(max = 100)
+    @Column(name = "DEPE_NAME", nullable = false, length = 100)
     private String name;
+
 
 }

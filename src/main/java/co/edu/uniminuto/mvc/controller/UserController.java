@@ -42,7 +42,7 @@ public class UserController {
     @GetMapping("/{id}")
     public String viewUserEdit(Model model, @PathVariable Long id) {
         model.addAttribute("roles", roleService.getRoles());
-        model.addAttribute("user", userService.findRole(id));
+        model.addAttribute("user", userService.findUser(id));
         return "view-user-form";
     }
 
